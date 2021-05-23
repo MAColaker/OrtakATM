@@ -6,7 +6,6 @@ import com.alicolaker.atm.musteriler.KurumsalMusteri;
 import com.alicolaker.atm.musteriler.Musteri;
 
 import java.util.HashMap;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -19,31 +18,23 @@ public class Main {
         Musteri kurumsalMusteri1 = new KurumsalMusteri(213, "Melih Sakarya", 15000.75, "Saha Bilgi");
         Musteri kurumsalMusteri2 = new KurumsalMusteri(132, "Mehmet Akşahin", 10000, "Testinium");
 
-        HashMap<Integer, Musteri> musteriler = new HashMap<>();
-        musteriler.put(1, bireyselMusteri1);
-        musteriler.put(2, bireyselMusteri2);
-        musteriler.put(3, bireyselMusteri3);
-        musteriler.put(4, kurumsalMusteri1);
-        musteriler.put(5, kurumsalMusteri2);
-
-        Scanner scanner = new Scanner(System.in);
+        HashMap<String, Musteri> musteriler = new HashMap<>();
+        musteriler.put("1", bireyselMusteri1);
+        musteriler.put("2", bireyselMusteri2);
+        musteriler.put("3", bireyselMusteri3);
+        musteriler.put("4", kurumsalMusteri1);
+        musteriler.put("5", kurumsalMusteri2);
 
         while (true) {
             System.out.println("0: Çıkış");
             System.out.print("Müşteri numarasını giriniz: ");
-            int musteriNo;
-
-            try {
-                musteriNo = scanner.nextInt();
-            } catch (InputMismatchException e) {
-                System.out.println("Geçersiz giriş");
-                scanner = new Scanner(System.in);
-                continue;
-            }
+            Scanner scanner = new Scanner(System.in);
+            String musteriNo = scanner.nextLine();
 
             if (musteriler.get(musteriNo) == null) {
-                if (musteriNo == 0)
+                if (musteriNo.equals("0")){
                     break;
+                }
                 System.out.println("Müşteri bilgisi bulunamadı");
             } else {
                 Musteri musteri = musteriler.get(musteriNo);
@@ -62,29 +53,23 @@ public class Main {
                 while (kontrol) {
                     System.out.println("0: Çıkış, 1: Para Yatırma, 2: Para Çekme");
                     System.out.print("İşlem Seçiniz: ");
-                    int secilenIslem;
-                    try {
-                        secilenIslem = scanner.nextInt();
-                    } catch (InputMismatchException e) {
-                        System.out.println("Geçersiz giriş");
-                        scanner = new Scanner(System.in);
-                        continue;
-                    }
+                    String secilenIslem = scanner.nextLine();
+
                     double miktar;
 
                     Islem islem = new Islem();
 
                     switch (secilenIslem) {
-                        case 0:
+                        case "0":
                             kontrol = false;
                             break;
-                        case 1:
+                        case "1":
                             System.out.print("Miktar giriniz: ");
                             miktar = scanner.nextDouble();
                             islem.paraYatirma(musteri, miktar);
                             kontrol = false;
                             break;
-                        case 2:
+                        case "2":
                             System.out.print("Miktar giriniz: ");
                             miktar = scanner.nextDouble();
                             islem.paraCekme(musteri, miktar);
